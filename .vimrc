@@ -1,5 +1,6 @@
 " curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 "     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" :PlugInstall
 call plug#begin()
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'Raimondi/delimitMate'
