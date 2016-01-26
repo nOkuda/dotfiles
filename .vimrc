@@ -4,6 +4,7 @@
 call plug#begin()
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'Raimondi/delimitMate'
+Plug 'scrooloose/syntastic'
 call plug#end()
 
 set pastetoggle=<F2>
@@ -122,4 +123,17 @@ let g:ctrlp_custom_ignore = {
     \ }
 let g:ctrlp_working_path_mode='rc'
 nnoremap <leader>p :CtrlP<cr>
+
+" Syntastic options
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '!'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+nnoremap <leader>j :lnext<cr>
+nnoremap <leader>k :lprevious<cr>
 
