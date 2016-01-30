@@ -2,10 +2,14 @@
 "     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 " :PlugInstall
 call plug#begin()
+Plug 'altercation/vim-colors-solarized'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'scrooloose/syntastic'
+Plug 'JuliaLang/julia-vim'
 call plug#end()
+
+runtime macros/matchit.vim
 
 set pastetoggle=<F2>
 set ruler
