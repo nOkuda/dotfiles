@@ -4,7 +4,7 @@
 call plug#begin()
 Plug 'altercation/vim-colors-solarized'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'Raimondi/delimitMate'
+Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/syntastic'
 Plug 'JuliaLang/julia-vim'
 call plug#end()
@@ -70,6 +70,7 @@ setlocal cursorline
 " search options
 set hlsearch
 set incsearch
+" when jumping to next or previous search result, center the result on screen
 nnoremap n nzz
 nnoremap N Nzz
 
@@ -121,6 +122,7 @@ syntax enable
 filetype indent plugin on
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 let g:tex_flavor="latex"
+au FileType tex let g:AutoPairs["$"] = "$"
 
 " CtrlP options
 let g:ctrlp_custom_ignore = {
