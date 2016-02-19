@@ -140,6 +140,7 @@ function! LoadAutoPairsTex()
     endif
 endfunction
 au FileType tex call LoadAutoPairsTex()
+nnoremap <leader>t :call AutoPairsToggle()<cr>
 
 " CtrlP options
 let g:ctrlp_custom_ignore = {
