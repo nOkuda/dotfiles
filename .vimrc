@@ -122,7 +122,24 @@ syntax enable
 filetype indent plugin on
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 let g:tex_flavor="latex"
-au FileType tex let g:AutoPairs["$"] = "$"
+
+" Auto Pairs options
+"
+" LaTeX options
+function! CopyDict(dict)
+    let result = {}
+    for k in keys(a:dict)
+        let result[k] = a:dict[k]
+    endfor
+    return result
+endfunction
+function! LoadAutoPairsTex()
+    if !exists("b:AutoPairs")
+        let b:AutoPairs = CopyDict(g:AutoPairs)
+        let b:AutoPairs["$"] = "$"
+    endif
+endfunction
+au FileType tex call LoadAutoPairsTex()
 
 " CtrlP options
 let g:ctrlp_custom_ignore = {
