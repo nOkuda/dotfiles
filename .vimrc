@@ -7,6 +7,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/syntastic'
 Plug 'JuliaLang/julia-vim'
+Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
 runtime macros/matchit.vim
