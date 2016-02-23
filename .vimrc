@@ -8,6 +8,8 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/syntastic'
 Plug 'JuliaLang/julia-vim'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
 runtime macros/matchit.vim
@@ -47,20 +49,10 @@ endif
 
 " status line options
 set laststatus=2
-set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
-"              | | | | |  |   |      |  |     |    |
-"              | | | | |  |   |      |  |     |    + current column
-"              | | | | |  |   |      |  |     +-- current line
-"              | | | | |  |   |      |  +-- current % into file
-"              | | | | |  |   |      +-- current syntax in square brackets
-"              | | | | |  |   +-- current fileformat
-"              | | | | |  +-- number of lines
-"              | | | | +-- preview flag in square brackets
-"              | | | +-- help flag in square brackets
-"              | | +-- readonly flag in square brackets
-"              | +-- rodified flag in square brackets
-"              +-- full path to file in the buffer
-set lazyredraw
+let g:airline_theme='solarized'
+let g:airline_powerline_fonts = 1
+" for best results, install https://github.com/powerline/fonts/Hack to ~/.fonts
+" then run fc-cache -vf ~/.fonts
 
 " highlight current line
 autocmd WinEnter * setlocal cursorline
