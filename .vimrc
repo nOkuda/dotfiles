@@ -47,9 +47,12 @@ if $_ != 'git commit'
     colorscheme solarized
 endif
 
+" force vim to respond immediately to escape
+set timeoutlen=1000 ttimeoutlen=0
+
 " status line options
 set laststatus=2
-let g:airline_theme='solarized'
+let g:airline_theme='base16'
 let g:airline_powerline_fonts = 1
 " for best results, install https://github.com/powerline/fonts/Hack to ~/.fonts
 " then run fc-cache -vf ~/.fonts
