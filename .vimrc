@@ -118,6 +118,7 @@ syntax enable
 filetype indent plugin on
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 let g:tex_flavor="latex"
+let g:tex_indent_brace=0
 
 " Auto Pairs options
 "
