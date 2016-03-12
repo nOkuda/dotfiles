@@ -137,6 +137,14 @@ function! LoadAutoPairsTex()
     endif
 endfunction
 au FileType tex call LoadAutoPairsTex()
+
+function! LoadAutoPairsHtml()
+    if !exists("b:AutoPairs")
+        let b:AutoPairs = CopyDict(g:AutoPairs)
+        let b:AutoPairs["<"] = ">"
+    endif
+endfunction
+au FileType html call LoadAutoPairsHtml()
 nnoremap <leader>t :call AutoPairsToggle()<cr>
 
 " CtrlP options
