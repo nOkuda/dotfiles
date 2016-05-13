@@ -14,6 +14,9 @@ call plug#end()
 
 runtime macros/matchit.vim
 
+" prevent mouse interference
+set mouse=
+
 set pastetoggle=<F2>
 set ruler
 set fenc=utf-8
