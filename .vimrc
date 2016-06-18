@@ -1,3 +1,9 @@
+" force improved
+set nocompatible
+
+" faster plugin loading?
+filetype off
+
 " curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 "     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 " :PlugInstall
@@ -10,6 +16,8 @@ Plug 'JuliaLang/julia-vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'godlygeek/tabular'
+Plug 'gabrielelana/vim-markdown'
 call plug#end()
 
 runtime macros/matchit.vim
@@ -27,8 +35,10 @@ set ts=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab
+set cinoptions=(0
 autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType markdown setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
 " numbering
 set number
@@ -170,3 +180,4 @@ nnoremap <leader>j :lnext<cr>
 nnoremap <leader>k :lprevious<cr>
 nnoremap <leader>e :SyntasticCheck<cr>
 
+nnoremap <leader>m :!make<cr>
