@@ -116,6 +116,9 @@ let g:BASH_Ctrl_j = 'off'
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
+if has('nvim')
+    nmap <BS> <C-W>h
+endif
 nnoremap <C-l> <C-w>l
 
 " tab completion on files
