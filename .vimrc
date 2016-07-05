@@ -116,6 +116,9 @@ let g:BASH_Ctrl_j = 'off'
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
+if has('nvim')
+    nmap <BS> <C-W>h
+endif
 nnoremap <C-l> <C-w>l
 
 " tab completion on files
@@ -132,6 +135,7 @@ filetype indent plugin on
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 let g:tex_flavor="latex"
 let g:tex_indent_brace=0
+autocmd FileType cpp setlocal matchpairs+=<:>
 
 " Auto Pairs options
 "
