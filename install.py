@@ -18,9 +18,11 @@ if 'ARCH' in output:
     subprocess.call(
         ['ln', '-sf', os.path.join(script_dir, '.xmonad', 'bin', 'xsession'),
         os.path.join(os.path.expanduser('~/'), '.xinitrc')])
+    print('ARCH')
 
 # relevant for all distros
 for df in dotfiles:
+    print(df)
     subprocess.call(
         ['ln', '-sf', os.path.join(script_dir, df),
         os.path.join(os.path.expanduser('~/'), df)])
