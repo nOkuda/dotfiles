@@ -24,6 +24,6 @@ if 'ARCH' in output:
 for df in dotfiles:
     print(df)
     subprocess.call(
-        ['ln', '-sf', os.path.join(script_dir, df),
+        ['ln', '-snf', os.path.join(script_dir, df),
         os.path.join(os.path.expanduser('~/'), df)])
 
