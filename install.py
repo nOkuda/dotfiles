@@ -14,6 +14,7 @@ output, err = p_uname.communicate()
 if 'ARCH' in output:
     dotfiles.append('.xmonad')
     dotfiles.append('.xbindkeysrc')
+    dotfiles.append('.pam_environment')
     # don't forget xinitrc
     subprocess.call(
         ['ln', '-sf', os.path.join(script_dir, '.xmonad', 'bin', 'xsession'),

@@ -45,11 +45,11 @@ xcompmgr -n &
 # Start the system tray
 tray &
 
-# Start a terminal
-gnome-terminal &
-
-# Start a browser
+# Start web browser
 chromium &
+
+# Start terminal
+gnome-terminal &
 
 # Start screensaver
 xscreensaver -no-splash &
@@ -58,11 +58,8 @@ xscreensaver -no-splash &
 pulseaudio --start &
 xbindkeys
 
-# start ibus for Japanese input
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus
-ibus-daemon -drx &
+# start fcitx for Japanese input; relevant variables set in .pam_environment
+fcitx -rd
 
 # extra make sure that caps lock is ctrl
 setxkbmap -option caps:ctrl_modifier
