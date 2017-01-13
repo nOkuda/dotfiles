@@ -10,7 +10,7 @@ filetype off
 call plug#begin()
 Plug 'altercation/vim-colors-solarized'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'jiangmiao/auto-pairs'
+Plug 'cohama/lexima.vim'
 Plug 'scrooloose/syntastic'
 Plug 'JuliaLang/julia-vim'
 Plug 'christoomey/vim-tmux-navigator'
@@ -38,9 +38,10 @@ set ts=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab
-set cinoptions=(0
+set cinoptions=(0,N-s
 autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType xml setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType markdown setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
 " numbering
@@ -137,32 +138,11 @@ let g:tex_flavor="latex"
 let g:tex_indent_brace=0
 autocmd FileType cpp setlocal matchpairs+=<:>
 
-" Auto Pairs options
-"
-" LaTeX options
-function! CopyDict(dict)
-    let result = {}
-    for k in keys(a:dict)
-        let result[k] = a:dict[k]
-    endfor
-    return result
-endfunction
-function! LoadAutoPairsTex()
-    if !exists("b:AutoPairs")
-        let b:AutoPairs = CopyDict(g:AutoPairs)
-        let b:AutoPairs["$"] = "$"
-    endif
-endfunction
-au FileType tex call LoadAutoPairsTex()
-
-function! LoadAutoPairsHtml()
-    if !exists("b:AutoPairs")
-        let b:AutoPairs = CopyDict(g:AutoPairs)
-        let b:AutoPairs["<"] = ">"
-    endif
-endfunction
-au FileType html call LoadAutoPairsHtml()
-nnoremap <leader>t :call AutoPairsToggle()<cr>
+" lexima options
+let g:lexima_enable_newline_rules=0
+call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
+call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'latex'})
+call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
 
 " CtrlP options
 let g:ctrlp_custom_ignore = {
@@ -177,7 +157,6 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-let g:syntastic_python_pylint_exe = 'python3 -m pylint'
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '!'
 set statusline+=%#warningmsg#
@@ -186,5 +165,10 @@ set statusline+=%*
 nnoremap <leader>j :lnext<cr>
 nnoremap <leader>k :lprevious<cr>
 nnoremap <leader>e :SyntasticCheck<cr>
+let g:syntastic_python_pylint_exe = 'python3 -m pylint'
+let g:syntastic_cpp_checkers = ['clang_check']
+let g:syntastic_cpp_clang_check_post_args=""
+" potentially 'clang_tidy' in the future
+" let g:syntastic_cpp_clang_tidy_post_args=""
 
 nnoremap <leader>m :!make<cr>
