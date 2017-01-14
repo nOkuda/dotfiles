@@ -61,8 +61,8 @@ xbindkeys
 # start fcitx for Japanese input; relevant variables set in .pam_environment
 fcitx -rd
 
-# extra make sure that caps lock is ctrl
-setxkbmap -option caps:ctrl_modifier
+# set layout to dvorak; extra make sure that caps lock is ctrl
+setxkbmap -layout dvorak -option caps:ctrl_modifier
 
 # launch window manager
 exec dbus-launch --sh-syntax --exit-with-session xmonad
