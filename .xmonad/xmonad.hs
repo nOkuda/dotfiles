@@ -92,7 +92,6 @@ myLayout = avoidStruts (
     Tall 1 (3/100) (1/2) |||
     Mirror (Tall 1 (3/100) (1/2)) |||
     spiral (6/7)) |||
-    ThreeColMid 1 (3/100) (1/2) |||
     tabbed shrinkText tabConfig |||
     Full |||
     noBorders (fullscreenFull Full)
@@ -261,11 +260,11 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- TODO: update this binding with avoidStruts, ((modMask, xK_b),
 
   -- Quit xmonad.
-  , ((modMask .|. shiftMask, xK_q),
+  , ((modMask .|. shiftMask, xK_Escape),
      io (exitWith ExitSuccess))
 
   -- Restart xmonad.
-  , ((modMask, xK_q),
+  , ((modMask, xK_Escape),
      restart "xmonad" True)
   ]
   ++
@@ -343,7 +342,7 @@ main = do
           , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
           , ppSep = "   "
       }
-      , manageHook = manageDocks <+> myManageHook
+      , manageHook = myManageHook <+> manageDocks
       , startupHook = setWMName "LG3D"
   }
 

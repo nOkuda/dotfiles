@@ -3,7 +3,8 @@ import subprocess
 
 dotfiles = [
     '.vimrc',
-    '.tmux.conf']
+    '.tmux.conf',
+    '.dir_colors']
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
 p_uname = subprocess.Popen(['uname', '-r'],
