@@ -25,10 +25,14 @@ runtime macros/matchit.vim
 " prevent mouse interference
 set mouse=
 
+" Various settings
 set pastetoggle=<F2>
 set ruler
 set fenc=utf-8
 set backspace=indent,eol,start
+set title
+set scrolloff=2
+set ttyfast
 
 " leader key
 let mapleader=" "
@@ -38,7 +42,9 @@ set ts=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab
-set cinoptions=(0,N-s
+set autoindent
+"set cinoptions=(0,N-s
+set list listchars=tab:»\ ,trail:·,nbsp:·
 autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType xml setlocal shiftwidth=2 tabstop=2 softtabstop=2
@@ -132,7 +138,9 @@ autocmd BufEnter * silent! lcd %:p:h
 
 " filetype options
 syntax enable
-filetype indent plugin on
+filetype on
+filetype indent on
+filetype plugin on
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 let g:tex_flavor="latex"
 let g:tex_indent_brace=0
