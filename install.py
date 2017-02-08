@@ -29,3 +29,7 @@ for df in dotfiles:
         ['ln', '-snf', os.path.join(script_dir, df),
         os.path.join(os.path.expanduser('~/'), df)])
 
+# link snippets
+subprocess.call(
+    ['ln', '-snf', os.path.join(script_dir, 'vim/UltiSnips'),
+    os.path.join(os.path.expanduser('~/'), '.vim/UltiSnips')])

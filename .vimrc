@@ -18,6 +18,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'godlygeek/tabular'
 Plug 'gabrielelana/vim-markdown'
+Plug 'SirVer/ultisnips'
 call plug#end()
 
 runtime macros/matchit.vim
@@ -178,5 +179,10 @@ let g:syntastic_cpp_checkers = ['clang_check']
 let g:syntastic_cpp_clang_check_post_args=""
 " potentially 'clang_tidy' in the future
 " let g:syntastic_cpp_clang_tidy_post_args=""
+
+" UltiSnips options
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 nnoremap <leader>m :!make<cr>
