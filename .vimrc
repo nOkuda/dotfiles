@@ -56,8 +56,8 @@ set number
 set relativenumber
 
 " text width
-set textwidth=80
-set colorcolumn=81
+set textwidth=79
+set colorcolumn=80
 
 " colors
 set background=dark
