@@ -11,7 +11,6 @@ call plug#begin()
 Plug 'altercation/vim-colors-solarized'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'cohama/lexima.vim'
-Plug 'scrooloose/syntastic'
 Plug 'JuliaLang/julia-vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
@@ -19,6 +18,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'godlygeek/tabular'
 Plug 'gabrielelana/vim-markdown'
 Plug 'SirVer/ultisnips'
+Plug 'w0rp/ale'
 call plug#end()
 
 runtime macros/matchit.vim
@@ -71,10 +71,6 @@ endif
 " force vim to respond immediately to escape
 set timeoutlen=1000 ttimeoutlen=0
 
-" status line options
-set laststatus=2
-let g:airline_theme='base16'
-let g:airline_powerline_fonts = 1
 " for best results, install https://github.com/powerline/fonts/Hack to ~/.fonts
 " then run fc-cache -vf ~/.fonts
 
@@ -161,24 +157,32 @@ let g:ctrlp_custom_ignore = {
 let g:ctrlp_working_path_mode='rc'
 nnoremap <leader>p :CtrlP<cr>
 
-" Syntastic options
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '!'
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-nnoremap <leader>j :lnext<cr>
-nnoremap <leader>k :lprevious<cr>
-nnoremap <leader>e :SyntasticCheck<cr>
-let g:syntastic_python_pylint_exe = 'python3 -m pylint'
-let g:syntastic_cpp_checkers = ['clang_check']
-let g:syntastic_cpp_clang_check_post_args=""
-" potentially 'clang_tidy' in the future
-" let g:syntastic_cpp_clang_tidy_post_args=""
+" ALE options
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '!'
+nmap <silent> <leader>j <Plug>(ale_next_wrap)
+nmap <silent> <leader>k <Plug>(ale_previous_wrap)
+nmap <leader>e :ALELint<cr>
+let g:ale_lint_on_text_changed = 'never'
+" in case I want to configure airline with ALE's status line:
+" https://github.com/w0rp/ale/issues/199
+let g:ale_statusline_format = ['✗ %d', '! %d', '⬥ ok']
+let g:ale_echo_msg_error_str = '✗'
+let g:ale_echo_msg_warning_str = '!'
+let g:ale_echo_msg_format = '[%linter%] %s'
+let g:ale_set_loclist = 1
+let g:ale_set_quickfix = 0
+let g:ale_linters = {
+\   'python': ['flake8'],
+\}
+
+" status line (airline) options
+set laststatus=2
+let g:airline_theme='base16'
+let g:airline_powerline_fonts = 1
+" vim-airline/autoload/airline/extensions/ale.vim
+let g:airline#extensions#ale#error_symbol = '✗:'
+let g:airline#extensions#ale#warning_symbol = '!:'
 
 " UltiSnips options
 let g:UltiSnipsExpandTrigger="<tab>"
