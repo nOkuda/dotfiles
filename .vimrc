@@ -19,6 +19,8 @@ Plug 'godlygeek/tabular'
 Plug 'gabrielelana/vim-markdown'
 Plug 'SirVer/ultisnips'
 Plug 'w0rp/ale'
+Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-fugitive'
 call plug#end()
 
 runtime macros/matchit.vim
@@ -34,6 +36,9 @@ set backspace=indent,eol,start
 set title
 set scrolloff=2
 set ttyfast
+
+" escape key alternative
+inoremap <C-c> <Esc>
 
 " leader key
 let mapleader=" "
@@ -188,5 +193,11 @@ let g:airline#extensions#ale#warning_symbol = '!:'
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+" commenting options
+let g:NERDCommentEmptyLines = 1
+let g:NERDTrimTrailingWhitespace = 1
+" can't use noremap for some reason
+map <leader>; <plug>NERDCommenterToggle
 
 nnoremap <leader>m :!make<cr>
