@@ -51,10 +51,7 @@ set expandtab
 set autoindent
 "set cinoptions=(0,N-s
 set list listchars=tab:»\ ,trail:·,nbsp:·
-autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType xml setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType markdown setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType html,javascript,json,markdown,scala,xml setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
 " numbering
 set number
@@ -101,6 +98,9 @@ nnoremap N Nzz
 set viminfo='10,\"100,:20,%,n~/.viminfo
 
 function! ResCur()
+  if expand('%:t') == "COMMIT_EDITMSG"
+    return 1
+  endif
   if line("'\"") <= line("$")
     normal! g`"
     return 1
