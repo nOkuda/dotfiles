@@ -8,7 +8,7 @@ filetype off
 "     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 " :PlugInstall
 call plug#begin()
-Plug 'altercation/vim-colors-solarized'
+Plug 'morhetz/gruvbox'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'cohama/lexima.vim'
 Plug 'JuliaLang/julia-vim'
@@ -22,7 +22,7 @@ Plug 'w0rp/ale'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-fugitive'
 Plug 'pangloss/vim-javascript'
-Plug 'morhetz/gruvbox'
+Plug 'elmcast/elm-vim'
 call plug#end()
 
 runtime macros/matchit.vim
@@ -71,8 +71,6 @@ let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 "http://stackoverflow.com/questions/27930003/git-commit-opens-up-two-editor-panes-instead-of-one-to-enter-message
 if $_ != 'git commit'
-"    colorscheme solarized
-"    colorscheme PaperColor
     colorscheme gruvbox
 endif
 
@@ -185,7 +183,10 @@ let g:ale_set_loclist = 1
 let g:ale_set_quickfix = 0
 let g:ale_linters = {
 \   'python': ['flake8'],
+\   'cpp': ['clang'],
 \}
+let g:ale_cpp_clang_executable = 'clang++-5.0'
+let g:ale_cpp_clang_options = '-std=c++1z -Wall `pkg-config --libs --cflags icu-uc icu-io` -I${HOME}/Code/cereal/include -I${HOME}/Code/compare-tess/cpp/include'
 
 " status line (airline) options
 set laststatus=2
