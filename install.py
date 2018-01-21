@@ -3,8 +3,7 @@ import subprocess
 
 dotfiles = [
     '.vimrc',
-    '.tmux.conf',
-    '.dir_colors']
+    '.tmux.conf']
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
 p_uname = subprocess.Popen(['uname', '-r'],
@@ -33,3 +32,10 @@ for df in dotfiles:
 subprocess.call(
     ['ln', '-snf', os.path.join(script_dir, 'vim/UltiSnips'),
     os.path.join(os.path.expanduser('~/'), '.vim/UltiSnips')])
+
+# set up gnome-terminal
+subprocess.call(
+    'dconf load'
+    '/org/gnome/terminal/legacy/profiles:/:fb7841a7-c0b8-4865-bc81-d365df02b2bc/'
+    ' < {}'.format(os.path.join(script_dir, 'base-16-grubvox.dconf'))
+)
