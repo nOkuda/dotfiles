@@ -21,6 +21,8 @@ Plug 'SirVer/ultisnips'
 Plug 'w0rp/ale'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-fugitive'
+Plug 'pangloss/vim-javascript'
+Plug 'morhetz/gruvbox'
 call plug#end()
 
 runtime macros/matchit.vim
@@ -62,12 +64,16 @@ set textwidth=79
 set colorcolumn=80
 
 " colors
-set background=dark
-set t_Co=256
-"let g:solarized_termcolors=256
+set background=light
+set termguicolors
+" https://www.reddit.com/r/vim/comments/5416d0/true_colors_in_vim_under_tmux/
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 "http://stackoverflow.com/questions/27930003/git-commit-opens-up-two-editor-panes-instead-of-one-to-enter-message
 if $_ != 'git commit'
-    colorscheme solarized
+"    colorscheme solarized
+"    colorscheme PaperColor
+    colorscheme gruvbox
 endif
 
 " force vim to respond immediately to escape
@@ -149,7 +155,7 @@ let g:tex_indent_brace=0
 autocmd FileType cpp setlocal matchpairs+=<:>
 
 " lexima options
-let g:lexima_enable_newline_rules=0
+" let g:lexima_enable_newline_rules=0
 call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
 call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'latex'})
 call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
