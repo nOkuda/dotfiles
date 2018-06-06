@@ -35,7 +35,7 @@ subprocess.call(
 
 # set up gnome-terminal
 subprocess.call(
-    'dconf load'
+    'dconf load '
     '/org/gnome/terminal/legacy/profiles:/:fb7841a7-c0b8-4865-bc81-d365df02b2bc/'
-    ' < {}'.format(os.path.join(script_dir, 'base-16-grubvox.dconf'))
+    ' < {}'.format(os.path.join(script_dir, 'base-16-gruvbox-profile.dconf'))
 )
