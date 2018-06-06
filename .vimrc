@@ -148,6 +148,7 @@ filetype on
 filetype indent on
 filetype plugin on
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+autocmd FileType plaintex,tex,latex setlocal spell
 let g:tex_flavor="latex"
 let g:tex_indent_brace=0
 autocmd FileType cpp setlocal matchpairs+=<:>
