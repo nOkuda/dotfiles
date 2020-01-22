@@ -23,6 +23,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-fugitive'
 Plug 'pangloss/vim-javascript'
 Plug 'elmcast/elm-vim'
+Plug 'Vimjas/vim-python-pep8-indent'
 call plug#end()
 
 runtime macros/matchit.vim
@@ -148,6 +149,7 @@ filetype on
 filetype indent on
 filetype plugin on
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+autocmd FileType markdown setlocal syntax=OFF
 autocmd FileType plaintex,tex,latex setlocal spell
 let g:tex_flavor="latex"
 let g:tex_indent_brace=0
@@ -158,6 +160,7 @@ autocmd FileType cpp setlocal matchpairs+=<:>
 call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
 call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'latex'})
 call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
+call lexima#add_rule({'char': "'", 'at': 'f\%#', 'input_after': "'", 'filetype': 'python'})
 
 " CtrlP options
 let g:ctrlp_custom_ignore = {
