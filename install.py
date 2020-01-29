@@ -27,6 +27,17 @@ for df in dotfiles:
     subprocess.call(
         ['ln', '-snf', os.path.join(script_dir, df),
         os.path.join(os.path.expanduser('~/'), df)])
+    if df == '.vimrc':
+        subprocess.call(
+            [
+                'curl', '-fLo', os.path.expanduser('~/.vim/autoload/plug.vim'),
+                '--create-dirs',
+                'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim',
+            ]
+        )
+        print("Don't forget to call :PlugInstall")
+        print('Also make sure to add to .bashrc after :PlugInstall:')
+        print('\tsource "$HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh"')
 
 # link snippets
 subprocess.call(
