@@ -16,14 +16,13 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'godlygeek/tabular'
-Plug 'gabrielelana/vim-markdown'
 Plug 'SirVer/ultisnips'
 Plug 'w0rp/ale'
 Plug 'scrooloose/nerdcommenter'
-Plug 'tpope/vim-fugitive'
 Plug 'pangloss/vim-javascript'
-Plug 'elmcast/elm-vim'
 Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'Konfekt/FastFold'
 call plug#end()
 
 runtime macros/matchit.vim
@@ -72,6 +71,10 @@ let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 "http://stackoverflow.com/questions/27930003/git-commit-opens-up-two-editor-panes-instead-of-one-to-enter-message
 if $_ != 'git commit'
+    "https://github.com/morhetz/gruvbox/issues/175
+    let g:gruvbox_guisp_fallback = "bg"
+    "https://github.com/gruvbox-community/gruvbox/issues/126
+    let g:gruvbox_invert_selection = 0
     colorscheme gruvbox
 endif
 
@@ -149,8 +152,10 @@ filetype on
 filetype indent on
 filetype plugin on
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-autocmd FileType markdown setlocal syntax=OFF
-autocmd FileType plaintex,tex,latex setlocal spell
+autocmd FileType markdown setlocal foldlevel=99 textwidth=0 spell spelllang=en_us
+let g:markdown_folding=1
+autocmd FileType plaintex,tex,latex setlocal spell spelllang=en_us
+autocmd FileType text setlocal textwidth=0
 let g:tex_flavor="latex"
 let g:tex_indent_brace=0
 autocmd FileType cpp setlocal matchpairs+=<:>
@@ -189,6 +194,11 @@ let g:ale_linters = {
 \   'python': ['flake8'],
 \   'cpp': ['clang'],
 \}
+let g:ale_fixers = {
+\   'python': ['remove_trailing_lines', 'isort', 'yapf',]
+\}
+let g:ale_fix_on_save = 1
+nmap <silent> <leader>f :ALEFix<CR>
 let g:ale_cpp_clang_executable = 'clang++-5.0'
 let g:ale_cpp_clang_options = '-std=c++1z -Wall `pkg-config --libs --cflags icu-uc icu-io` -I${HOME}/Code/cereal/include -I${HOME}/Code/compare-tess/cpp/include'
 
@@ -212,3 +222,5 @@ let g:NERDTrimTrailingWhitespace = 1
 map <leader>; <plug>NERDCommenterToggle
 
 nnoremap <leader>m :!make<cr>
+
+let g:table_mode_corner='|'
