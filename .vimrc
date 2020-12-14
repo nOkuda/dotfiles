@@ -1,6 +1,9 @@
 " force improved
 set nocompatible
 
+" leader key
+let mapleader=" "
+
 " faster plugin loading?
 filetype off
 
@@ -41,9 +44,6 @@ set ttyfast
 
 " escape key alternative
 inoremap <C-c> <Esc>
-
-" leader key
-let mapleader=" "
 
 " space settings
 set ts=4
@@ -190,6 +190,10 @@ let g:ale_echo_msg_warning_str = '!'
 let g:ale_echo_msg_format = '[%linter%] %s'
 let g:ale_set_loclist = 1
 let g:ale_set_quickfix = 0
+let g:ale_fixers = {
+            \   'python': ['yapf'],
+            \}
+let g:ale_fix_on_save = 1
 let g:ale_linters = {
 \   'python': ['flake8'],
 \   'cpp': ['clang'],
