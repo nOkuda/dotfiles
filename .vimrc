@@ -45,6 +45,10 @@ set ttyfast
 " escape key alternative
 inoremap <C-c> <Esc>
 
+" enter insertion mode, insert timestamp, and add two lines
+" https://stackoverflow.com/a/58604
+nnoremap <leader>d i<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><CR><CR>
+
 " space settings
 set ts=4
 set shiftwidth=4
