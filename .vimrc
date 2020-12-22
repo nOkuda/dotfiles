@@ -45,10 +45,6 @@ set ttyfast
 " escape key alternative
 inoremap <C-c> <Esc>
 
-" enter insertion mode, insert timestamp, and add two lines
-" https://stackoverflow.com/a/58604
-nnoremap <leader>d i<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><CR><CR>
-
 " space settings
 set ts=4
 set shiftwidth=4
@@ -158,6 +154,11 @@ filetype plugin on
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 autocmd FileType markdown setlocal foldlevel=99 textwidth=0 spell spelllang=en_us
 let g:markdown_folding=1
+" in markdown mode, go to bottom of file, enter insertion mode,
+" add two newlines, add markdown header, insert timestamp, and add two lines
+" https://stackoverflow.com/a/58604
+" https://vi.stackexchange.com/a/10666
+autocmd FileType markdown nnoremap <buffer> <leader>d GO<CR># <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><CR><CR>
 autocmd FileType plaintex,tex,latex setlocal spell spelllang=en_us
 autocmd FileType text setlocal textwidth=0
 let g:tex_flavor="latex"
