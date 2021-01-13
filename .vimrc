@@ -20,7 +20,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'godlygeek/tabular'
 Plug 'SirVer/ultisnips'
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 Plug 'scrooloose/nerdcommenter'
 Plug 'pangloss/vim-javascript'
 Plug 'Vimjas/vim-python-pep8-indent'
@@ -158,7 +158,7 @@ let g:markdown_folding=1
 " add two newlines, add markdown header, insert timestamp, and add two lines
 " https://stackoverflow.com/a/58604
 " https://vi.stackexchange.com/a/10666
-autocmd FileType markdown nnoremap <buffer> <leader>d GO<CR># <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><CR><CR>
+autocmd FileType markdown nnoremap <buffer> <leader>d Go<CR># <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><CR><CR>
 autocmd FileType plaintex,tex,latex setlocal spell spelllang=en_us
 autocmd FileType text setlocal textwidth=0
 let g:tex_flavor="latex"
@@ -199,8 +199,10 @@ let g:ale_fixers = {
             \   'python': ['yapf'],
             \}
 let g:ale_fix_on_save = 1
+" need to install pyls ahead of time with
+" pip3 install --user 'python-language-server[all]'
 let g:ale_linters = {
-\   'python': ['flake8'],
+\   'python': ['pyls'],
 \   'cpp': ['clang'],
 \}
 let g:ale_fixers = {
@@ -210,6 +212,20 @@ let g:ale_fix_on_save = 1
 nmap <silent> <leader>f :ALEFix<CR>
 let g:ale_cpp_clang_executable = 'clang++-5.0'
 let g:ale_cpp_clang_options = '-std=c++1z -Wall `pkg-config --libs --cflags icu-uc icu-io` -I${HOME}/Code/cereal/include -I${HOME}/Code/compare-tess/cpp/include'
+" Remap keybindings to find function definitions with LSP
+" https://github.com/dense-analysis/ale/issues/1645
+function ALELSPMappings()
+	let l:lsp_found=0
+	for l:linter in ale#linter#Get(&filetype) | if !empty(l:linter.lsp) | let l:lsp_found=1 | endif | endfor
+	if (l:lsp_found)
+		nnoremap <buffer> <C-]> :ALEGoToDefinition<CR>
+		nnoremap <buffer> <C-^> :ALEFindReferences<CR>
+	else
+		silent! unmap <buffer> <C-]>
+		silent! unmap <buffer> <C-^>
+	endif
+endfunction
+autocmd BufRead,FileType * call ALELSPMappings()
 
 " status line (airline) options
 set laststatus=2
