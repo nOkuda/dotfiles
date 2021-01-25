@@ -152,8 +152,9 @@ filetype on
 filetype indent on
 filetype plugin on
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-autocmd FileType markdown setlocal foldlevel=99 textwidth=0 spell spelllang=en_us
+autocmd FileType markdown setlocal foldlevel=99 textwidth=0 spelllang=en_us
 let g:markdown_folding=1
+nnoremap <leader>s :set spell!<CR>
 " in markdown mode, go to bottom of file, enter insertion mode,
 " add two newlines, add markdown header, insert timestamp, and add two lines
 " https://stackoverflow.com/a/58604
@@ -196,7 +197,7 @@ let g:ale_echo_msg_format = '[%linter%] %s'
 let g:ale_set_loclist = 1
 let g:ale_set_quickfix = 0
 let g:ale_fixers = {
-            \   'python': ['yapf'],
+            "\   'python': ['yapf'],
             \}
 let g:ale_fix_on_save = 1
 " need to install pyls ahead of time with
