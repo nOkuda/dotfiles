@@ -12,7 +12,6 @@ filetype off
 " :PlugInstall
 call plug#begin()
 Plug 'morhetz/gruvbox'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'cohama/lexima.vim'
 Plug 'JuliaLang/julia-vim'
 Plug 'christoomey/vim-tmux-navigator'
@@ -26,6 +25,14 @@ Plug 'pangloss/vim-javascript'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'Konfekt/FastFold'
+if has('nvim')
+  Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/denite.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+Plug 'lervag/wiki.vim'
 call plug#end()
 
 runtime macros/matchit.vim
@@ -155,11 +162,10 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 autocmd FileType markdown setlocal foldlevel=99 textwidth=0 spelllang=en_us
 let g:markdown_folding=1
 nnoremap <leader>s :set spell!<CR>
-" in markdown mode, go to bottom of file, enter insertion mode,
-" add two newlines, add markdown header, insert timestamp, and add two lines
+" in insert mode on a markdown file, insert parenthesized timestamp
 " https://stackoverflow.com/a/58604
 " https://vi.stackexchange.com/a/10666
-autocmd FileType markdown nnoremap <buffer> <leader>d Go<CR># <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><CR><CR>
+autocmd FileType markdown inoremap <buffer> <C-D> (<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>)
 autocmd FileType plaintex,tex,latex setlocal spell spelllang=en_us
 autocmd FileType text setlocal textwidth=0
 let g:tex_flavor="latex"
@@ -172,14 +178,6 @@ call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
 call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'latex'})
 call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
 call lexima#add_rule({'char': "'", 'at': 'f\%#', 'input_after': "'", 'filetype': 'python'})
-
-" CtrlP options
-let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-    \ 'file': '\v\.(pyc)$',
-    \ }
-let g:ctrlp_working_path_mode='rc'
-nnoremap <leader>p :CtrlP<cr>
 
 " ALE options
 let g:ale_sign_error = '✗'
@@ -196,15 +194,12 @@ let g:ale_echo_msg_warning_str = '!'
 let g:ale_echo_msg_format = '[%linter%] %s'
 let g:ale_set_loclist = 1
 let g:ale_set_quickfix = 0
-let g:ale_fixers = {
-            "\   'python': ['yapf'],
-            \}
-let g:ale_fix_on_save = 1
 " need to install pyls ahead of time with
 " pip3 install --user 'python-language-server[all]'
 let g:ale_linters = {
 \   'python': ['pyls'],
 \   'cpp': ['clang'],
+\   'rust': ['analyzer'],
 \}
 let g:ale_fixers = {
 \   'python': ['remove_trailing_lines', 'isort', 'yapf',]
@@ -250,3 +245,72 @@ map <leader>; <plug>NERDCommenterToggle
 nnoremap <leader>m :!make<cr>
 
 let g:table_mode_corner='|'
+
+" Define denite mappings
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> d
+  \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> p
+  \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> ;
+  \ denite#do_map('toggle_select').'j'
+endfunction
+
+" http://enigmatrix.me/blog/2019/06/12/my-vim-setup/
+call denite#custom#var('file/rec', 'command',
+	\ ['rg', '--files', '--glob', '!.git', '--color', 'never'])
+call denite#custom#var('grep', 'command', ['rg'])
+call denite#custom#var('grep', 'default_opts', ['--smart-case', '--follow', '--hidden', '--vimgrep', '--heading'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
+
+" Custom options for Denite
+"   auto_resize             - Auto resize the Denite window height automatically.
+"   prompt                  - Customize denite prompt
+"   direction               - Specify Denite window direction as directly below current pane
+"   winminheight            - Specify min height for Denite window
+"   highlight_mode_insert   - Specify h1-CursorLine in insert mode
+"   prompt_highlight        - Specify color of prompt
+"   highlight_matched_char  - Matched characters highlight
+"   highlight_matched_range - matched range highlight
+let s:denite_options = {'default' : {
+\ 'auto_resize': 1,
+\ 'direction': 'rightbelow',
+\ 'winminheight': '10',
+\ 'highlight_mode_insert': 'Visual',
+\ 'highlight_mode_normal': 'Visual',
+\ 'prompt_highlight': 'Function',
+\ 'highlight_matched_char': 'Function',
+\ 'highlight_matched_range': 'Normal'
+\ }}
+" Loop through denite options and enable them
+function! s:profile(opts) abort
+  for l:fname in keys(a:opts)
+    for l:dopt in keys(a:opts[l:fname])
+      call denite#custom#option(l:fname, l:dopt, a:opts[l:fname][l:dopt])
+    endfor
+  endfor
+endfunction
+
+call s:profile(s:denite_options)
+
+call denite#custom#option('_', 'statusline', v:false)
+
+nnoremap <leader>p :DeniteProjectDir file/rec -start-filter grep:::!<CR>
+nnoremap <leader>b :Denite buffer<CR>
+nnoremap <leader>/ :Denite line -start-filter grep:::!<CR>
+
+" ================
+" wiki.vim options
+" ================
+
+let g:wiki_filetypes = ['md']
