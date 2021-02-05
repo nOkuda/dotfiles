@@ -174,6 +174,7 @@ autocmd FileType cpp setlocal matchpairs+=<:>
 
 " lexima options
 " let g:lexima_enable_newline_rules=0
+let g:lexima_enable_space_rules=0
 call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
 call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'latex'})
 call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
