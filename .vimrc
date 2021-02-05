@@ -33,6 +33,7 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 Plug 'lervag/wiki.vim'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 call plug#end()
 
 runtime macros/matchit.vim
@@ -158,14 +159,14 @@ syntax enable
 filetype on
 filetype indent on
 filetype plugin on
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-autocmd FileType markdown setlocal foldlevel=99 textwidth=0 spelllang=en_us
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown.pandoc
+autocmd FileType markdown.pandoc setlocal foldlevel=99 textwidth=0 spelllang=en_us
 let g:markdown_folding=1
 nnoremap <leader>s :set spell!<CR>
 " in insert mode on a markdown file, insert parenthesized timestamp
 " https://stackoverflow.com/a/58604
 " https://vi.stackexchange.com/a/10666
-autocmd FileType markdown inoremap <buffer> <C-D> (<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>)
+autocmd FileType markdown.pandoc inoremap <buffer> <C-D> (<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>)
 autocmd FileType plaintex,tex,latex setlocal spell spelllang=en_us
 autocmd FileType text setlocal textwidth=0
 let g:tex_flavor="latex"
@@ -315,3 +316,7 @@ nnoremap <leader>/ :Denite line -start-filter grep:::!<CR>
 " ================
 
 let g:wiki_filetypes = ['md']
+
+" vim-pandoc-syntax options
+
+let g:pandoc#syntax#conceal#use = 0
