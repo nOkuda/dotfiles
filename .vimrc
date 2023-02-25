@@ -24,7 +24,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'pangloss/vim-javascript'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'dhruvasagar/vim-table-mode'
-Plug 'Konfekt/FastFold'
 if has('nvim')
   Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -33,7 +32,9 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 Plug 'lervag/wiki.vim'
-Plug 'vim-pandoc/vim-pandoc-syntax'
+"Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'Konfekt/FastFold'
+Plug 'cespare/vim-toml', { 'branch': 'main' }
 call plug#end()
 
 runtime macros/matchit.vim
@@ -55,6 +56,7 @@ inoremap <C-c> <Esc>
 
 " space settings
 set ts=4
+set shiftround
 set shiftwidth=4
 set softtabstop=4
 set expandtab
@@ -155,6 +157,7 @@ set wildmode=list:longest
 autocmd BufEnter * silent! lcd %:p:h
 
 " filetype options
+set synmaxcol=500
 syntax enable
 filetype on
 filetype indent on
@@ -320,3 +323,10 @@ let g:wiki_filetypes = ['md']
 " vim-pandoc-syntax options
 
 let g:pandoc#syntax#conceal#use = 0
+
+" FastFold
+nmap zuz <Plug>(FastFoldUpdate)
+let g:fastfold_savehook = 1
+let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
+let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
+let g:fastfold_minlines = 50
