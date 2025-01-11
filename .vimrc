@@ -35,6 +35,9 @@ Plug 'lervag/wiki.vim'
 "Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'Konfekt/FastFold'
 Plug 'cespare/vim-toml', { 'branch': 'main' }
+Plug 'ledger/vim-ledger'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 runtime macros/matchit.vim
@@ -154,7 +157,7 @@ set wildmode=list:longest
 
 "http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file
 " change current working directory based on file
-autocmd BufEnter * silent! lcd %:p:h
+"autocmd BufEnter * silent! lcd %:p:h
 
 " filetype options
 set synmaxcol=500
@@ -330,3 +333,17 @@ let g:fastfold_savehook = 1
 let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
 let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
 let g:fastfold_minlines = 50
+
+" For ledger
+" https://justyn.io/blog/automatically-sort-and-align-ledger-transactions-in-vim/
+au BufNewFile,BufRead *.ldg,*.ledger setf ledger | comp ledger
+let g:ledger_maxwidth = 120
+let g:ledger_fold_blanks = 1
+function LedgerSort()
+    :%! ledger -f - print --sort 'date, amount'
+    :%LedgerAlign
+endfunction
+command LedgerSort call LedgerSort()
+
+" complete account name for ledger
+autocmd FileType ledger inoremap <expr> <buffer> <c-x><c-k> fzf#vim#complete('ledger -f ledger.ldg accounts show')
